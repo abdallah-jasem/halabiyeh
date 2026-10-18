@@ -39,7 +39,7 @@ class HistoryScreen extends ConsumerWidget {
               child: Text(l.noHistory, style: const TextStyle(color: kMuted)),
             )
           : ListView.separated(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
               itemCount: history.length,
               separatorBuilder: (_, _) => const SizedBox(height: 10),
               itemBuilder: (context, index) {

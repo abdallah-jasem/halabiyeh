@@ -7,6 +7,7 @@ import 'package:halabiyeh_split/features/bill/domain/entities/outing.dart';
 import 'package:halabiyeh_split/features/bill/presentation/screens/split_screen.dart';
 import 'package:halabiyeh_split/features/groups/domain/group_repository.dart';
 import 'package:halabiyeh_split/features/history/domain/outing_repository.dart';
+import 'package:halabiyeh_split/features/settings/presentation/settings_provider.dart';
 import 'package:halabiyeh_split/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ class FakeGroup implements GroupRepository {
 void main() {
   testWidgets('add friend, item, payment -> results and settlement', (tester) async {
     SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
     tester.view.physicalSize = const Size(800, 6000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
@@ -39,6 +41,7 @@ void main() {
         overrides: [
           outingRepositoryProvider.overrideWithValue(FakeOutings()),
           groupRepositoryProvider.overrideWithValue(FakeGroup()),
+          sharedPrefsProvider.overrideWithValue(prefs),
         ],
         child: const MaterialApp(
           localizationsDelegates: [

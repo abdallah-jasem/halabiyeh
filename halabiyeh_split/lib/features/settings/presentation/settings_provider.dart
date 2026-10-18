@@ -10,8 +10,6 @@ class Settings {
 
   const Settings({this.name = 'AJ', this.accent = const Color(0xFF1E5F48), this.roundStep = 0, this.language = 'en'});
 
-  Locale get locale => Locale(language);
-
   Settings copyWith({String? name, Color? accent, int? roundStep, String? language}) => Settings(
     name: name ?? this.name,
     accent: accent ?? this.accent,
@@ -22,42 +20,43 @@ class Settings {
 
 const accentOptions = [Color(0xFF1E5F48), Color(0xFF24508C), Color(0xFF8A3B1E), Color(0xFF17211D)];
 
+/// Loaded in main() before runApp, so saved settings (language, accent)
+/// apply on the first frame instead of flipping in after an async load.
+final sharedPrefsProvider = Provider<SharedPreferences>((ref) => throw UnimplementedError('override in main'));
+
 /// App-level prefs, persisted in SharedPreferences (key-value, cross-outing).
 class SettingsNotifier extends Notifier<Settings> {
+  SharedPreferences get _prefs => ref.read(sharedPrefsProvider);
+
   @override
   Settings build() {
-    _load();
-    return const Settings();
-  }
-
-  Future<void> _load() async {
-    final prefs = await SharedPreferences.getInstance();
-    state = Settings(
-      name: prefs.getString('name') ?? state.name,
-      accent: Color(prefs.getInt('accent') ?? state.accent.toARGB32()),
-      roundStep: prefs.getInt('roundStep') ?? 0,
-      language: prefs.getString('language') ?? 'en',
+    const d = Settings();
+    return Settings(
+      name: _prefs.getString('name') ?? d.name,
+      accent: Color(_prefs.getInt('accent') ?? d.accent.toARGB32()),
+      roundStep: _prefs.getInt('roundStep') ?? d.roundStep,
+      language: _prefs.getString('language') ?? d.language,
     );
   }
 
-  Future<void> setName(String v) async {
+  void setName(String v) {
     state = state.copyWith(name: v);
-    (await SharedPreferences.getInstance()).setString('name', v);
+    _prefs.setString('name', v);
   }
 
-  Future<void> setAccent(Color c) async {
+  void setAccent(Color c) {
     state = state.copyWith(accent: c);
-    (await SharedPreferences.getInstance()).setInt('accent', c.toARGB32());
+    _prefs.setInt('accent', c.toARGB32());
   }
 
-  Future<void> setRoundStep(int v) async {
+  void setRoundStep(int v) {
     state = state.copyWith(roundStep: v);
-    (await SharedPreferences.getInstance()).setInt('roundStep', v);
+    _prefs.setInt('roundStep', v);
   }
 
-  Future<void> setLanguage(String v) async {
+  void setLanguage(String v) {
     state = state.copyWith(language: v);
-    (await SharedPreferences.getInstance()).setString('language', v);
+    _prefs.setString('language', v);
   }
 }
 

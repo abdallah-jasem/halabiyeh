@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../groups/presentation/group_notifier.dart';
 import 'settings_provider.dart';
@@ -20,7 +21,7 @@ class SettingsScreen extends ConsumerWidget {
         title: Text(l.navSettings, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 4, 20, 20),
         children: [
           _Box(
             child: Row(
@@ -32,116 +33,97 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(width: 14),
                 Expanded(
-                  child: TextFormField(
-                    initialValue: settings.name,
-                    decoration: InputDecoration(labelText: l.yourName, border: InputBorder.none, isDense: true),
-                    onChanged: notifier.setName,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l.yourName, style: const TextStyle(fontSize: 12, color: kMuted)),
+                      TextFormField(
+                        initialValue: settings.name,
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                        decoration: const InputDecoration.collapsed(hintText: ''),
+                        onChanged: notifier.setName,
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
           _Box(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            title: l.accentColor,
+            child: Row(
               children: [
-                Text(l.accentColor, style: const TextStyle(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    for (final color in accentOptions)
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(end: 10),
-                        child: GestureDetector(
-                          onTap: () => notifier.setAccent(color),
-                          child: CircleAvatar(
-                            backgroundColor: color,
-                            radius: 18,
-                            child: settings.accent.toARGB32() == color.toARGB32()
-                                ? const Icon(Icons.check, color: Colors.white, size: 18)
-                                : null,
-                          ),
-                        ),
+                for (final color in accentOptions)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 10),
+                    child: GestureDetector(
+                      onTap: () => notifier.setAccent(color),
+                      child: CircleAvatar(
+                        backgroundColor: color,
+                        radius: 18,
+                        child: settings.accent.toARGB32() == color.toARGB32()
+                            ? const Icon(Icons.check, color: Colors.white, size: 18)
+                            : null,
                       ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 14),
-          _Box(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l.rounding, style: const TextStyle(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 10),
-                SegmentedButton<int>(
-                  showSelectedIcon: false,
-                  segments: [
-                    ButtonSegment(value: 0, label: Text(l.roundNone)),
-                    ButtonSegment(value: 500, label: Text(l.round500)),
-                    ButtonSegment(value: 1000, label: Text(l.round1000)),
-                  ],
-                  selected: {settings.roundStep},
-                  onSelectionChanged: (s) => notifier.setRoundStep(s.first),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 14),
-          _Box(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l.language, style: const TextStyle(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 10),
-                SegmentedButton<String>(
-                  showSelectedIcon: false,
-                  segments: const [
-                    ButtonSegment(value: 'en', label: Text('English')),
-                    ButtonSegment(value: 'ar', label: Text('العربية')),
-                  ],
-                  selected: {settings.language},
-                  onSelectionChanged: (s) => notifier.setLanguage(s.first),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 14),
-          _Box(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(l.savedGroup, style: const TextStyle(fontWeight: FontWeight.w600)),
-                Text(l.savedGroupHint, style: const TextStyle(fontSize: 12)),
-                const SizedBox(height: 10),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (var i = 0; i < group.length; i++)
-                      InputChip(
-                        label: Text(group[i]),
-                        onPressed: () => _promptName(
-                          context,
-                          l,
-                          initial: group[i],
-                        ).then((n) => n == null ? null : ref.read(groupProvider.notifier).rename(i, n)),
-                        onDeleted: () => ref.read(groupProvider.notifier).remove(i),
-                      ),
-                    ActionChip(
-                      avatar: const Icon(Icons.add, size: 18),
-                      label: Text(l.add),
-                      onPressed: () async {
-                        final n = await _promptName(context, l);
-                        if (n == null) return;
-                        if (!ref.read(groupProvider.notifier).add(n) && context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.duplicateName)));
-                        }
-                      },
                     ),
-                  ],
+                  ),
+              ],
+            ),
+          ),
+          _Box(
+            title: l.rounding,
+            child: SegmentedButton<int>(
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(value: 0, label: Text(l.roundNone)),
+                ButtonSegment(value: 500, label: Text(l.round500)),
+                ButtonSegment(value: 1000, label: Text(l.round1000)),
+              ],
+              selected: {settings.roundStep},
+              onSelectionChanged: (s) => notifier.setRoundStep(s.first),
+            ),
+          ),
+          _Box(
+            title: l.language,
+            child: SegmentedButton<String>(
+              showSelectedIcon: false,
+              segments: const [
+                ButtonSegment(value: 'en', label: Text('English')),
+                ButtonSegment(value: 'ar', label: Text('العربية')),
+              ],
+              selected: {settings.language},
+              onSelectionChanged: (s) => notifier.setLanguage(s.first),
+            ),
+          ),
+          _Box(
+            title: l.savedGroup,
+            hint: l.savedGroupHint,
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (var i = 0; i < group.length; i++)
+                  InputChip(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    label: Text(group[i]),
+                    onPressed: () => _promptName(
+                      context,
+                      l,
+                      initial: group[i],
+                    ).then((n) => n == null ? null : ref.read(groupProvider.notifier).rename(i, n)),
+                    onDeleted: () => ref.read(groupProvider.notifier).remove(i),
+                  ),
+                ActionChip(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  avatar: const Icon(Icons.add, size: 18),
+                  label: Text(l.add),
+                  onPressed: () async {
+                    final n = await _promptName(context, l);
+                    if (n == null) return;
+                    if (!ref.read(groupProvider.notifier).add(n) && context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.duplicateName)));
+                    }
+                  },
                 ),
               ],
             ),
@@ -171,15 +153,30 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
+/// One settings card. Same inner padding, title gap and card gap everywhere.
 class _Box extends StatelessWidget {
+  final String? title;
+  final String? hint;
   final Widget child;
-  const _Box({required this.child});
+  const _Box({this.title, this.hint, required this.child});
 
   @override
   Widget build(BuildContext context) => Container(
     width: double.infinity,
+    margin: const EdgeInsets.only(bottom: 12),
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-    child: child,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title != null) Text(title!, style: const TextStyle(fontWeight: FontWeight.w600)),
+        if (hint != null) ...[
+          const SizedBox(height: 2),
+          Text(hint!, style: const TextStyle(fontSize: 12, color: kMuted)),
+        ],
+        if (title != null) const SizedBox(height: 12),
+        child,
+      ],
+    ),
   );
 }
