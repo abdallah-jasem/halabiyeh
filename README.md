@@ -70,8 +70,10 @@ This gives at most one transfer fewer than the number of people.
 uneven amounts don't fit the item's price, the app shows a warning and holds back the
 settlement until the bill balances.
 
-**6. Rounding** (optional). Each share rounds to the nearest 500 or 1,000. Any leftover from
-rounding goes to the person with the largest share, so the shares still add up to the bill.
+**6. Rounding** (optional). Shares round to multiples of 500 or 1,000 and still add up to the
+bill: each share rounds down, the remaining whole steps go to the people who lost the most, and
+any amount smaller than one step goes to the person with the largest share. If the step is too
+big for the bill (someone would pay nothing), the shares stay exact.
 
 ## Install
 

@@ -106,6 +106,21 @@ void main() {
     expect(roundShares(shares, 0), shares);
   });
 
+  test('roundShares: step too big for the bill leaves shares exact', () {
+    final shares = {'a': 85.0, 'b': 40.0, 'c': 160.0};
+    expect(roundShares(shares, 500), shares);
+  });
+
+  test('roundShares: drift is spread, not dumped on one person', () {
+    final shares = {for (var i = 0; i < 10; i++) '$i': 740.0};
+    final rounded = roundShares(shares, 500);
+    expect(rounded.values.fold(0.0, (a, b) => a + b), closeTo(7400, 0.001));
+    for (final v in rounded.values) {
+      expect((v - 740).abs(), lessThanOrEqualTo(500 + 400));
+    }
+    expect(rounded.values.where((v) => v >= 1000).length, 4);
+  });
+
   test('service + tip split in proportion to item shares', () {
     final b = calculateBalances(planExample(servicePercent: 10, tip: 15));
     final total = planExample(servicePercent: 10, tip: 15).total;

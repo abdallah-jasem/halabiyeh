@@ -52,19 +52,17 @@ class SettingsScreen extends ConsumerWidget {
           _Box(
             title: l.accentColor,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 for (final color in accentOptions)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 10),
-                    child: GestureDetector(
-                      onTap: () => notifier.setAccent(color),
-                      child: CircleAvatar(
-                        backgroundColor: color,
-                        radius: 18,
-                        child: settings.accent.toARGB32() == color.toARGB32()
-                            ? const Icon(Icons.check, color: Colors.white, size: 18)
-                            : null,
-                      ),
+                  GestureDetector(
+                    onTap: () => notifier.setAccent(color),
+                    child: CircleAvatar(
+                      backgroundColor: color,
+                      radius: 18,
+                      child: settings.accent.toARGB32() == color.toARGB32()
+                          ? const Icon(Icons.check, color: Colors.white, size: 18)
+                          : null,
                     ),
                   ),
               ],
@@ -74,6 +72,7 @@ class SettingsScreen extends ConsumerWidget {
             title: l.rounding,
             child: SegmentedButton<int>(
               showSelectedIcon: false,
+              expandedInsets: EdgeInsets.zero,
               segments: [
                 ButtonSegment(value: 0, label: Text(l.roundNone)),
                 ButtonSegment(value: 500, label: Text(l.round500)),
@@ -87,6 +86,7 @@ class SettingsScreen extends ConsumerWidget {
             title: l.language,
             child: SegmentedButton<String>(
               showSelectedIcon: false,
+              expandedInsets: EdgeInsets.zero,
               segments: const [
                 ButtonSegment(value: 'en', label: Text('English')),
                 ButtonSegment(value: 'ar', label: Text('العربية')),
@@ -98,24 +98,31 @@ class SettingsScreen extends ConsumerWidget {
           _Box(
             title: l.savedGroup,
             hint: l.savedGroupHint,
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                for (var i = 0; i < group.length; i++)
-                  InputChip(
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    label: Text(group[i]),
-                    onPressed: () => _promptName(
-                      context,
-                      l,
-                      initial: group[i],
-                    ).then((n) => n == null ? null : ref.read(groupProvider.notifier).rename(i, n)),
-                    onDeleted: () => ref.read(groupProvider.notifier).remove(i),
+                if (group.isNotEmpty) ...[
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (var i = 0; i < group.length; i++)
+                        InputChip(
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          label: Text(group[i]),
+                          onPressed: () => _promptName(
+                            context,
+                            l,
+                            initial: group[i],
+                          ).then((n) => n == null ? null : ref.read(groupProvider.notifier).rename(i, n)),
+                          onDeleted: () => ref.read(groupProvider.notifier).remove(i),
+                        ),
+                    ],
                   ),
-                ActionChip(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  avatar: const Icon(Icons.add, size: 18),
+                  const SizedBox(height: 12),
+                ],
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.add, size: 18),
                   label: Text(l.add),
                   onPressed: () async {
                     final n = await _promptName(context, l);
@@ -154,6 +161,8 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 /// One settings card. Same inner padding, title gap and card gap everywhere.
+/// The control always stretches to the full card width (segmented buttons
+/// also need `expandedInsets: EdgeInsets.zero` to split it evenly).
 class _Box extends StatelessWidget {
   final String? title;
   final String? hint;
@@ -167,7 +176,7 @@ class _Box extends StatelessWidget {
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (title != null) Text(title!, style: const TextStyle(fontWeight: FontWeight.w600)),
         if (hint != null) ...[
