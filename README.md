@@ -75,8 +75,12 @@ rounding goes to the person with the largest share, so the shares still add up t
 
 ## Install
 
-Android only. Install the APK on your phone (you may need to allow installs from unknown
-sources), or build it yourself:
+Android only. Download **Halabiyeh.apk** from the
+[latest release](https://github.com/abdallah-jasem/halabiyeh/releases/latest), open it on your
+phone, and tap Install (allow installs from unknown sources if Android asks).
+Older phones that refuse it: use **Halabiyeh-universal.apk** from the same release.
+
+Or build it yourself:
 
 ```bash
 cd halabiyeh_split
