@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:printing/printing.dart';
 
 import '../../../../core/theme.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../settings/presentation/settings_provider.dart';
-import '../../../share/data/outing_pdf.dart';
 import '../../../share/domain/format_outing_summary.dart';
 import '../../data/receipt_store.dart';
 import '../../domain/entities/member.dart';
@@ -23,17 +21,8 @@ import '../widgets/money_text.dart';
 const _red = Color(0xFFA8441C);
 const _green = Color(0xFF1E5F48);
 
-ShareLabels shareLabels(AppLocalizations l) => ShareLabels(
-  total: l.total,
-  getsBack: l.getsBack,
-  owes: l.owes,
-  settleUp: l.settleUp,
-  name: l.name,
-  share: l.share,
-  paid: l.paid,
-  diff: l.diff,
-  gives: l.gives,
-);
+ShareLabels shareLabels(AppLocalizations l) =>
+    ShareLabels(total: l.total, getsBack: l.getsBack, owes: l.owes, settleUp: l.settleUp, gives: l.gives);
 
 class SplitScreen extends ConsumerWidget {
   const SplitScreen({super.key});
@@ -308,35 +297,17 @@ class SplitScreen extends ConsumerWidget {
             _ReceiptCard(path: outing.receiptPath),
             const SizedBox(height: 12),
 
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.copy_outlined),
-                    label: Text(l.copyWhatsapp),
-                    style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
-                    onPressed: () async {
-                      final text = formatOutingSummary(outing, shareLabels(l));
-                      await Clipboard.setData(ClipboardData(text: text));
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.copied)));
-                      }
-                    },
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.picture_as_pdf_outlined),
-                    label: Text(l.sharePdf),
-                    style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
-                    onPressed: () async {
-                      final bytes = await buildOutingPdf(outing, shareLabels(l), rtl: settings.language == 'ar');
-                      await Printing.sharePdf(bytes: bytes, filename: '${outing.title}.pdf');
-                    },
-                  ),
-                ),
-              ],
+            OutlinedButton.icon(
+              icon: const Icon(Icons.copy_outlined),
+              label: Text(l.copyWhatsapp),
+              style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+              onPressed: () async {
+                final text = formatOutingSummary(outing, shareLabels(l));
+                await Clipboard.setData(ClipboardData(text: text));
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.copied)));
+                }
+              },
             ),
             const SizedBox(height: 10),
 

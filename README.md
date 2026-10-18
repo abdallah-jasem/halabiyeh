@@ -21,11 +21,11 @@ that settle everyone.
 - **Results**: each person's share, what they paid, and the difference, with a line under
   each name that shows where the share came from.
 - **Settle up**: "Ziad gives Kekhia 110". The fewest transfers to make everyone even.
-- **Share**: copy a WhatsApp-ready summary, or send a PDF of the bill and settlement.
+- **Share**: copy a WhatsApp-ready summary of the bill and settlement.
 - **Receipt photo**: attach a photo of the bill as proof.
 - **History**: every outing is saved on the phone with its name, date, people, and total.
-- **Arabic / English**: switch the whole app, including right-to-left layout, the WhatsApp
-  text, and the PDF.
+- **Arabic / English**: switch the whole app, including right-to-left layout and the WhatsApp
+  text.
 
 Everything stays on the phone. No account, no server, no internet needed.
 
@@ -104,7 +104,6 @@ flutter analyze
 | State      | Riverpod |
 | Storage    | Hive for history and the saved group, SharedPreferences for settings |
 | Languages  | `flutter gen-l10n` with English and Arabic `.arb` files |
-| PDF        | `pdf` + `printing`, with a bundled Noto Sans Arabic font |
 
 ### Project layout
 
@@ -121,7 +120,7 @@ halabiyeh_split/lib/
       presentation/ Split screen and its Riverpod state
     history/       saved outings (Hive)
     groups/        "the usual friends" (Hive)
-    share/         WhatsApp text and PDF
+    share/         WhatsApp text
     settings/      name, color, language
     nav/           bottom navigation
   l10n/            English and Arabic strings

@@ -218,12 +218,6 @@ abstract class AppLocalizations {
   /// **'Copied'**
   String get copied;
 
-  /// No description provided for @sharePdf.
-  ///
-  /// In en, this message translates to:
-  /// **'Share PDF'**
-  String get sharePdf;
-
   /// No description provided for @saveToHistory.
   ///
   /// In en, this message translates to:

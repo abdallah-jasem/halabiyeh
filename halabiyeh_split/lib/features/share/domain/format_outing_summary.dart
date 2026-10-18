@@ -2,20 +2,16 @@ import '../../bill/domain/entities/outing.dart';
 import '../../bill/domain/usecases/calculate_balances.dart';
 import '../../bill/domain/usecases/settle_up.dart';
 
-/// Translated strings for the summary and PDF. Built from AppLocalizations
+/// Translated strings for the summary. Built from AppLocalizations
 /// in presentation so this layer stays pure Dart.
 class ShareLabels {
-  final String total, getsBack, owes, settleUp, name, share, paid, diff;
+  final String total, getsBack, owes, settleUp;
   final String Function(String from, String to, int amount) gives;
   const ShareLabels({
     required this.total,
     required this.getsBack,
     required this.owes,
     required this.settleUp,
-    required this.name,
-    required this.share,
-    required this.paid,
-    required this.diff,
     required this.gives,
   });
 }

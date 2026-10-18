@@ -71,9 +71,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copied => 'Copied';
 
   @override
-  String get sharePdf => 'Share PDF';
-
-  @override
   String get saveToHistory => 'Save outing to history';
 
   @override

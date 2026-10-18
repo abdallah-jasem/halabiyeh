@@ -71,9 +71,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get copied => 'انتسخ';
 
   @override
-  String get sharePdf => 'شارك PDF';
-
-  @override
   String get saveToHistory => 'احفظ الطلعة بالسجل';
 
   @override

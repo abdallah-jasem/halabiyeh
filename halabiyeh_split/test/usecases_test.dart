@@ -151,10 +151,6 @@ void main() {
         getsBack: 'gets back',
         owes: 'owes',
         settleUp: 'Settle up',
-        name: 'Name',
-        share: 'Share',
-        paid: 'Paid',
-        diff: 'Diff',
         gives: (f, t, a) => '$f gives $t $a',
       ),
     ).replaceAll(RegExp('[\u2066-\u2069]'), '');
