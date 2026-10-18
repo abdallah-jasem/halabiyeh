@@ -7,3 +7,4 @@ plans/
 .idea/
 *.iml
 .vscode/
+!/README.md
