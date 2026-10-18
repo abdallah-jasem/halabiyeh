@@ -1,0 +1,3 @@
+# Design mockups, not app code: keep them out of the language stats
+*.html linguist-documentation
+"App icon-html/**" linguist-documentation
