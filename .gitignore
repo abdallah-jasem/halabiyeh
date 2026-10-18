@@ -1,0 +1,9 @@
+# Notes and plans stay local
+*.md
+plans/
+*.zip
+
+# Editor
+.idea/
+*.iml
+.vscode/

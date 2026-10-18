@@ -1,0 +1,161 @@
+{
+  "@@locale": "en",
+  "navSplit": "Split",
+  "navHistory": "History",
+  "navSettings": "Settings",
+  "outingLabel": "OUTING",
+  "friendsAndItems": "{friends} friends · {items} items",
+  "@friendsAndItems": {
+    "placeholders": {
+      "friends": {
+        "type": "int"
+      },
+      "items": {
+        "type": "int"
+      }
+    }
+  },
+  "total": "Total",
+  "sectionFriends": "Friends",
+  "sectionItems": "Items",
+  "sectionPaid": "Who paid?",
+  "sectionResults": "Results",
+  "add": "Add",
+  "addItem": "Add item",
+  "servicePercent": "Service %",
+  "tip": "Tip",
+  "name": "Name",
+  "share": "Share",
+  "paid": "Paid",
+  "diff": "Diff",
+  "copyWhatsapp": "Copy for WhatsApp",
+  "copied": "Copied",
+  "sharePdf": "Share PDF",
+  "saveToHistory": "Save outing to history",
+  "savedToHistory": "Saved to history",
+  "addFriend": "Add friend",
+  "editFriend": "Edit friend",
+  "hintName": "Name",
+  "cancel": "Cancel",
+  "remove": "Remove",
+  "save": "Save",
+  "itemName": "Item name",
+  "itemLabel": "Item",
+  "price": "Price",
+  "whoShared": "Who shared it?",
+  "all": "All",
+  "equal": "Equal",
+  "uneven": "Uneven",
+  "auto": "auto",
+  "sharing": "{count} sharing",
+  "@sharing": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noOneShares": "No one shares this item",
+  "paidMissing": "Paid {paid} of {total} (missing {missing})",
+  "@paidMissing": {
+    "placeholders": {
+      "paid": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "missing": {
+        "type": "int"
+      }
+    }
+  },
+  "paidOver": "Paid {paid} of {total} (over by {over})",
+  "@paidOver": {
+    "placeholders": {
+      "paid": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "over": {
+        "type": "int"
+      }
+    }
+  },
+  "settleUp": "Settle up",
+  "allSettled": "All settled",
+  "gives": "{from} gives {to} {amount}",
+  "@gives": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "getsBack": "gets back",
+  "owes": "owes",
+  "receipt": "Receipt",
+  "attachReceipt": "Attach receipt",
+  "camera": "Camera",
+  "gallery": "Gallery",
+  "removeReceipt": "Remove receipt",
+  "newOuting": "New outing",
+  "noHistory": "No saved outings yet",
+  "historyRow": "{date} · {people} people · {total}",
+  "@historyRow": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "people": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "yourName": "Your name",
+  "accentColor": "Accent color",
+  "rounding": "Round shares",
+  "roundNone": "Off",
+  "round500": "500",
+  "round1000": "1,000",
+  "savedGroup": "Saved group",
+  "savedGroupHint": "These friends are added to every new outing.",
+  "loadGroup": "Load group",
+  "language": "Language",
+  "duplicateName": "Name already added",
+  "price0": "Price must be above 0",
+  "noServiceHint": "Service and tip need at least one priced item",
+  "unevenHint": "Type what each person ATE, not what they paid. Leave empty to split the rest.",
+  "unevenMismatch": "Amounts add up to {assigned}, but the item costs {price}",
+  "@unevenMismatch": {
+    "placeholders": {
+      "assigned": {
+        "type": "int"
+      },
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "unbalanced": "The bill doesn't balance (off by {gap}). Fix payments or items first.",
+  "@unbalanced": {
+    "placeholders": {
+      "gap": {
+        "type": "int"
+      }
+    }
+  },
+  "serviceTip": "Service + tip",
+  "roundingLabel": "Rounding"
+}
