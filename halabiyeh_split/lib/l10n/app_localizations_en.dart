@@ -189,18 +189,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accentColor => 'Accent color';
 
   @override
-  String get rounding => 'Round shares';
-
-  @override
-  String get roundNone => 'Off';
-
-  @override
-  String get round500 => '500';
-
-  @override
-  String get round1000 => '1,000';
-
-  @override
   String get savedGroup => 'Saved group';
 
   @override
@@ -237,7 +225,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get serviceTip => 'Service + tip';
-
-  @override
-  String get roundingLabel => 'Rounding';
 }

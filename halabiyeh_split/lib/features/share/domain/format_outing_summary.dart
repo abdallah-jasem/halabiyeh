@@ -27,8 +27,8 @@ String isolate(String s) => '\u2068$s\u2069';
 String ltr(String s) => '\u2066$s\u2069';
 
 /// WhatsApp-ready recap: bill, per-person diff, and who pays whom.
-String formatOutingSummary(Outing outing, ShareLabels l, {int roundStep = 0}) {
-  final balances = calculateBalances(outing, roundStep: roundStep);
+String formatOutingSummary(Outing outing, ShareLabels l) {
+  final balances = calculateBalances(outing);
   final nameFor = {for (final m in outing.members) m.id: m.name};
   final buffer = StringBuffer()
     ..writeln('*${outing.title}*')

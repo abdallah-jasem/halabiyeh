@@ -1,6 +1,5 @@
 import '../entities/outing.dart';
 import '../entities/outing_item.dart';
-import 'round_shares.dart';
 
 class MemberBalance {
   final String memberId;
@@ -75,11 +74,9 @@ Map<String, Map<String, double>> shareBreakdown(Outing outing) {
 }
 
 /// Full balance sheet: each member's total share (items + proportional
-/// service/tip) vs what they paid. [roundStep] > 0 rounds shares (see
-/// [roundShares]).
-List<MemberBalance> calculateBalances(Outing outing, {int roundStep = 0}) {
-  final totalShare = shareBreakdown(outing).map((id, lines) => MapEntry(id, lines.values.fold(0.0, (a, b) => a + b)));
-  final shares = roundShares(totalShare, roundStep);
+/// service/tip) vs what they paid. Exact, no rounding.
+List<MemberBalance> calculateBalances(Outing outing) {
+  final shares = shareBreakdown(outing).map((id, lines) => MapEntry(id, lines.values.fold(0.0, (a, b) => a + b)));
   return outing.members
       .map((m) => MemberBalance(memberId: m.id, share: shares[m.id] ?? 0, paid: outing.payments[m.id] ?? 0))
       .toList();

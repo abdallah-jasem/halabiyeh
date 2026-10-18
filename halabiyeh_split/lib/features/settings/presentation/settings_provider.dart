@@ -5,17 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Settings {
   final String name;
   final Color accent;
-  final int roundStep; // 0 = off, 500, 1000
   final String language; // 'en' | 'ar'
 
-  const Settings({this.name = 'AJ', this.accent = const Color(0xFF1E5F48), this.roundStep = 0, this.language = 'en'});
+  const Settings({this.name = 'AJ', this.accent = const Color(0xFF1E5F48), this.language = 'en'});
 
-  Settings copyWith({String? name, Color? accent, int? roundStep, String? language}) => Settings(
-    name: name ?? this.name,
-    accent: accent ?? this.accent,
-    roundStep: roundStep ?? this.roundStep,
-    language: language ?? this.language,
-  );
+  Settings copyWith({String? name, Color? accent, String? language}) =>
+      Settings(name: name ?? this.name, accent: accent ?? this.accent, language: language ?? this.language);
 }
 
 const accentOptions = [Color(0xFF1E5F48), Color(0xFF24508C), Color(0xFF8A3B1E), Color(0xFF17211D)];
@@ -30,11 +25,12 @@ class SettingsNotifier extends Notifier<Settings> {
 
   @override
   Settings build() {
+    // Rounding was removed; drop the old stored value.
+    _prefs.remove('roundStep');
     const d = Settings();
     return Settings(
       name: _prefs.getString('name') ?? d.name,
       accent: Color(_prefs.getInt('accent') ?? d.accent.toARGB32()),
-      roundStep: _prefs.getInt('roundStep') ?? d.roundStep,
       language: _prefs.getString('language') ?? d.language,
     );
   }
@@ -47,11 +43,6 @@ class SettingsNotifier extends Notifier<Settings> {
   void setAccent(Color c) {
     state = state.copyWith(accent: c);
     _prefs.setInt('accent', c.toARGB32());
-  }
-
-  void setRoundStep(int v) {
-    state = state.copyWith(roundStep: v);
-    _prefs.setInt('roundStep', v);
   }
 
   void setLanguage(String v) {

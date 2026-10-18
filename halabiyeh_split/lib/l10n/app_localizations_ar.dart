@@ -189,18 +189,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accentColor => 'لون التطبيق';
 
   @override
-  String get rounding => 'قرّب الحصص';
-
-  @override
-  String get roundNone => 'بلا';
-
-  @override
-  String get round500 => '500';
-
-  @override
-  String get round1000 => '1,000';
-
-  @override
   String get savedGroup => 'الشلة المحفوظة';
 
   @override
@@ -237,7 +225,4 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get serviceTip => 'خدمة وبخشيش';
-
-  @override
-  String get roundingLabel => 'تقريب';
 }

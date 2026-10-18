@@ -69,20 +69,6 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           _Box(
-            title: l.rounding,
-            child: SegmentedButton<int>(
-              showSelectedIcon: false,
-              expandedInsets: EdgeInsets.zero,
-              segments: [
-                ButtonSegment(value: 0, label: Text(l.roundNone)),
-                ButtonSegment(value: 500, label: Text(l.round500)),
-                ButtonSegment(value: 1000, label: Text(l.round1000)),
-              ],
-              selected: {settings.roundStep},
-              onSelectionChanged: (s) => notifier.setRoundStep(s.first),
-            ),
-          ),
-          _Box(
             title: l.language,
             child: SegmentedButton<String>(
               showSelectedIcon: false,

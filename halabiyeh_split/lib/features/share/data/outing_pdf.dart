@@ -12,8 +12,8 @@ import '../domain/format_outing_summary.dart';
 /// Renders the balance sheet and settlement as a PDF. Infra detail (pdf
 /// package): domain data in, bytes out. Arabic needs the bundled font or it
 /// renders as boxes.
-Future<Uint8List> buildOutingPdf(Outing outing, ShareLabels l, {int roundStep = 0, bool rtl = false}) async {
-  final balances = calculateBalances(outing, roundStep: roundStep);
+Future<Uint8List> buildOutingPdf(Outing outing, ShareLabels l, {bool rtl = false}) async {
+  final balances = calculateBalances(outing);
   final transfers = settleUp(balances);
   final nameFor = {for (final m in outing.members) m.id: m.name};
   final arabic = pw.Font.ttf(await rootBundle.load('assets/fonts/NotoSansArabic-Regular.ttf'));

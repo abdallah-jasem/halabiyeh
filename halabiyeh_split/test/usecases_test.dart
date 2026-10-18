@@ -4,7 +4,6 @@ import 'package:halabiyeh_split/features/bill/domain/entities/outing.dart';
 import 'package:halabiyeh_split/features/bill/domain/entities/outing_item.dart';
 import 'package:halabiyeh_split/features/bill/domain/usecases/calculate_balances.dart';
 import 'package:halabiyeh_split/features/bill/domain/usecases/parse_amount.dart';
-import 'package:halabiyeh_split/features/bill/domain/usecases/round_shares.dart';
 import 'package:halabiyeh_split/features/bill/domain/usecases/settle_up.dart';
 import 'package:halabiyeh_split/features/share/domain/format_outing_summary.dart';
 
@@ -99,26 +98,34 @@ void main() {
     expect(parseAmountSum('150 +'), isNull);
   });
 
-  test('roundShares: step 500 keeps the sum equal to the total', () {
-    final shares = {'a': 333.33, 'b': 333.33, 'c': 333.34};
-    final rounded = roundShares(shares, 500, total: 1000);
-    expect(rounded.values.fold(0.0, (a, b) => a + b), closeTo(1000, 0.001));
-    expect(roundShares(shares, 0), shares);
-  });
-
-  test('roundShares: step too big for the bill leaves shares exact', () {
-    final shares = {'a': 85.0, 'b': 40.0, 'c': 160.0};
-    expect(roundShares(shares, 500), shares);
-  });
-
-  test('roundShares: drift is spread, not dumped on one person', () {
-    final shares = {for (var i = 0; i < 10; i++) '$i': 740.0};
-    final rounded = roundShares(shares, 500);
-    expect(rounded.values.fold(0.0, (a, b) => a + b), closeTo(7400, 0.001));
-    for (final v in rounded.values) {
-      expect((v - 740).abs(), lessThanOrEqualTo(500 + 400));
-    }
-    expect(rounded.values.where((v) => v >= 1000).length, 4);
+  test('user example: exact shares and settlement, no rounding', () {
+    final o = Outing(
+      id: 'o2',
+      title: 'Test',
+      createdAt: DateTime(2026, 10, 18),
+      members: const [
+        Member(id: 'aj', name: 'AJ', colorValue: 0),
+        Member(id: 'k', name: 'Kikhya', colorValue: 0),
+        Member(id: 'z', name: 'Ziad', colorValue: 0),
+      ],
+      items: [
+        OutingItem(
+          id: '1',
+          name: 'صحيتن',
+          price: 210,
+          sharedByMemberIds: ['aj', 'k', 'z'],
+          splitMode: SplitMode.uneven,
+          fixedShares: {'k': 40},
+        ),
+        OutingItem(id: '2', name: 'اكلات', price: 75, sharedByMemberIds: ['aj', 'k', 'z']),
+      ],
+      payments: {'aj': 75, 'k': 210},
+    );
+    final b = {for (final x in calculateBalances(o)) x.memberId: x.share};
+    expect(b, {'aj': 110, 'k': 65, 'z': 110});
+    final t = settleUp(calculateBalances(o)).map((x) => (x.fromId, x.toId, x.amount)).toList();
+    expect(t, containsAll([('z', 'k', 110.0), ('aj', 'k', 35.0)]));
+    expect(t.length, 2);
   });
 
   test('service + tip split in proportion to item shares', () {

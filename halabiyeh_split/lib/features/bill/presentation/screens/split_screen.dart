@@ -235,7 +235,6 @@ class SplitScreen extends ConsumerWidget {
                           _NameWithBreakdown(
                             name: nameFor[b.memberId] ?? '?',
                             lines: breakdown[b.memberId] ?? const {},
-                            share: b.share,
                           ),
                         ),
                         _cell(MoneyText(b.share, textAlign: TextAlign.end)),
@@ -317,7 +316,7 @@ class SplitScreen extends ConsumerWidget {
                     label: Text(l.copyWhatsapp),
                     style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
                     onPressed: () async {
-                      final text = formatOutingSummary(outing, shareLabels(l), roundStep: settings.roundStep);
+                      final text = formatOutingSummary(outing, shareLabels(l));
                       await Clipboard.setData(ClipboardData(text: text));
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.copied)));
@@ -332,12 +331,7 @@ class SplitScreen extends ConsumerWidget {
                     label: Text(l.sharePdf),
                     style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
                     onPressed: () async {
-                      final bytes = await buildOutingPdf(
-                        outing,
-                        shareLabels(l),
-                        roundStep: settings.roundStep,
-                        rtl: settings.language == 'ar',
-                      );
+                      final bytes = await buildOutingPdf(outing, shareLabels(l), rtl: settings.language == 'ar');
                       await Printing.sharePdf(bytes: bytes, filename: '${outing.title}.pdf');
                     },
                   ),
@@ -829,18 +823,15 @@ class _ItemCardState extends ConsumerState<_ItemCard> {
 class _NameWithBreakdown extends StatelessWidget {
   final String name;
   final Map<String, double> lines;
-  final double share;
-  const _NameWithBreakdown({required this.name, required this.lines, required this.share});
+  const _NameWithBreakdown({required this.name, required this.lines});
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final rounding = share - lines.values.fold(0.0, (a, b) => a + b);
     final parts = [
       for (final e in lines.entries)
         if (e.value.round() != 0)
           '${isolate(e.key == serviceTipKey ? l.serviceTip : e.key)} ${ltr('${e.value.round()}')}',
-      if (rounding.round() != 0) '${l.roundingLabel} ${ltr('${rounding > 0 ? '+' : ''}${rounding.round()}')}',
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

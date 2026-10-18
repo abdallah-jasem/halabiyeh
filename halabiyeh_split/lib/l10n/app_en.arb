@@ -125,10 +125,6 @@
   },
   "yourName": "Your name",
   "accentColor": "Accent color",
-  "rounding": "Round shares",
-  "roundNone": "Off",
-  "round500": "500",
-  "round1000": "1,000",
   "savedGroup": "Saved group",
   "savedGroupHint": "These friends are added to every new outing.",
   "loadGroup": "Load group",
@@ -156,6 +152,5 @@
       }
     }
   },
-  "serviceTip": "Service + tip",
-  "roundingLabel": "Rounding"
+  "serviceTip": "Service + tip"
 }

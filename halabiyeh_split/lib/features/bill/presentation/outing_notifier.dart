@@ -5,7 +5,6 @@ import 'package:uuid/uuid.dart';
 import '../../../core/providers.dart';
 import '../../groups/presentation/group_notifier.dart';
 import '../../history/presentation/history_notifier.dart';
-import '../../settings/presentation/settings_provider.dart';
 import '../domain/entities/member.dart';
 import '../domain/entities/outing.dart';
 import '../domain/entities/outing_item.dart';
@@ -108,8 +107,6 @@ class OutingNotifier extends Notifier<Outing> {
 
 final outingProvider = NotifierProvider<OutingNotifier, Outing>(OutingNotifier.new);
 
-final balancesProvider = Provider<List<MemberBalance>>(
-  (ref) => calculateBalances(ref.watch(outingProvider), roundStep: ref.watch(settingsProvider).roundStep),
-);
+final balancesProvider = Provider<List<MemberBalance>>((ref) => calculateBalances(ref.watch(outingProvider)));
 
 final transfersProvider = Provider<List<Transfer>>((ref) => settleUp(ref.watch(balancesProvider)));

@@ -21,7 +21,6 @@ that settle everyone.
 - **Results**: each person's share, what they paid, and the difference, with a line under
   each name that shows where the share came from.
 - **Settle up**: "Ziad gives Kekhia 110". The fewest transfers to make everyone even.
-- **Rounding**: optionally round each share to the nearest 500 or 1,000 for easy cash payment.
 - **Share**: copy a WhatsApp-ready summary, or send a PDF of the bill and settlement.
 - **Receipt photo**: attach a photo of the bill as proof.
 - **History**: every outing is saved on the phone with its name, date, people, and total.
@@ -70,11 +69,6 @@ This gives at most one transfer fewer than the number of people.
 uneven amounts don't fit the item's price, the app shows a warning and holds back the
 settlement until the bill balances.
 
-**6. Rounding** (optional). Shares round to multiples of 500 or 1,000 and still add up to the
-bill: each share rounds down, the remaining whole steps go to the people who lost the most, and
-any amount smaller than one step goes to the person with the largest share. If the step is too
-big for the bill (someone would pay nothing), the shares stay exact.
-
 ## Install
 
 Android only. Download **Halabiyeh.apk** from the
@@ -122,13 +116,13 @@ halabiyeh_split/lib/
   core/            theme, Hive setup, dependency wiring
   features/
     bill/          the outing editor
-      domain/      entities + use cases: split, balances, settle up, rounding, sum parsing
+      domain/      entities + use cases: split, balances, settle up, sum parsing
       data/        receipt photo storage
       presentation/ Split screen and its Riverpod state
     history/       saved outings (Hive)
     groups/        "the usual friends" (Hive)
     share/         WhatsApp text and PDF
-    settings/      name, color, rounding, language
+    settings/      name, color, language
     nav/           bottom navigation
   l10n/            English and Arabic strings
 ```

@@ -56,10 +56,6 @@
   "historyRow": "{date} · {people} أشخاص · {total}",
   "yourName": "اسمك",
   "accentColor": "لون التطبيق",
-  "rounding": "قرّب الحصص",
-  "roundNone": "بلا",
-  "round500": "500",
-  "round1000": "1,000",
   "savedGroup": "الشلة المحفوظة",
   "savedGroupHint": "هدول بينضافوا لكل طلعة جديدة.",
   "loadGroup": "جيب الشلة",
@@ -70,6 +66,5 @@
   "unevenHint": "اكتب قديش أكل كل واحد، مو قديش دفع. الفاضي بيتقسم عليه الباقي.",
   "unevenMismatch": "المبالغ مجموعها {assigned} والأكلة سعرها {price}",
   "unbalanced": "الحساب مو مزبوط (الفرق {gap}). صلّح المدفوع أو الأكلات أول.",
-  "serviceTip": "خدمة وبخشيش",
-  "roundingLabel": "تقريب"
+  "serviceTip": "خدمة وبخشيش"
 }

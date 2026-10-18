@@ -434,30 +434,6 @@ abstract class AppLocalizations {
   /// **'Accent color'**
   String get accentColor;
 
-  /// No description provided for @rounding.
-  ///
-  /// In en, this message translates to:
-  /// **'Round shares'**
-  String get rounding;
-
-  /// No description provided for @roundNone.
-  ///
-  /// In en, this message translates to:
-  /// **'Off'**
-  String get roundNone;
-
-  /// No description provided for @round500.
-  ///
-  /// In en, this message translates to:
-  /// **'500'**
-  String get round500;
-
-  /// No description provided for @round1000.
-  ///
-  /// In en, this message translates to:
-  /// **'1,000'**
-  String get round1000;
-
   /// No description provided for @savedGroup.
   ///
   /// In en, this message translates to:
@@ -523,12 +499,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Service + tip'**
   String get serviceTip;
-
-  /// No description provided for @roundingLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Rounding'**
-  String get roundingLabel;
 }
 
 class _AppLocalizationsDelegate
